@@ -3,7 +3,8 @@ from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 import requests
 import pandas as pd
-
+import psycopg2
+# Grab the API 
 def extract_covid_data():
     url = "https://disease.sh/v3/covid-19/countries"
     response = requests.get(url)
@@ -30,11 +31,11 @@ def transform_data():
     ]
     df = df[selected_columns]
 
-    # Clean data: fill NaNs, convert types if needed
+    # Clean data, fill nulls, convert types if needed
     df.fillna({'cases': 0, 'deaths': 0, 'recovered': 0, 'population': 0}, inplace=True)
     df[['cases', 'deaths', 'recovered', 'population']] = df[['cases', 'deaths', 'recovered', 'population']].astype(int)
 
-    # Add fatality rate
+    # Add fatality rate for analysis
     df['fatality_rate'] = df.apply(
         lambda row: round((row['deaths'] / row['cases']) * 100, 2) if row['cases'] > 0 else 0,
         axis=1
@@ -43,6 +44,41 @@ def transform_data():
     df.to_csv('/opt/airflow/dags/output/covid_data_transformed.csv', index=False)
     print("The transformation is complete.")    
 
+def load_data():
+    df = pd.read_csv('/opt/airflow/dags/output/covid_data_transformed.csv')
+
+    conn = psycopg2.connect(
+        host="postgres",
+        database="airflow",
+        user="airflow",
+        password="airflow"
+    )
+    cur = conn.cursor()
+
+    # Optional: Clear old data before insert
+    cur.execute("TRUNCATE TABLE covid_stats;")
+
+    for _, row in df.iterrows():
+        cur.execute("""
+            INSERT INTO covid_stats (country, iso2, iso3, lat, long, cases, deaths, recovered, population, fatality_rate)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        """, (
+            row['country'],
+            row['iso2'],
+            row['iso3'],
+            row['lat'],
+            row['long'],
+            row['cases'],
+            row['deaths'],
+            row['recovered'],
+            row['population'],
+            row['fatality_rate']
+        ))
+
+    conn.commit()
+    cur.close()
+    conn.close()
+    print("Data loaded into postgres.")
 
 default_args = {
     'owner': 'airflow',
@@ -67,4 +103,9 @@ with DAG(
         task_id='transform_data',
         python_callable=transform_data
     )
-    extract_task >> transform_task
+    load_task = PythonOperator(
+        task_id='load_data',
+        python_callable=load_data
+    )
+
+    extract_task >> transform_task >> load_task
