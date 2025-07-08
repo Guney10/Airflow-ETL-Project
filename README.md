@@ -20,4 +20,4 @@ It gets real-time COVID-19 data from a public API, transforms it, and loads it i
 
 ## Pipeline Architecture
 
-** COVID 19 API -> Airflow DAG (Extract, Transform and Load) -> PostgreSQL Database
+**COVID 19 API -> Airflow DAG (Extract, Transform and Load) -> PostgreSQL Database**
