@@ -31,3 +31,15 @@ It gets real-time COVID-19 data from a public API, transforms it, and loads it i
 ### 2. Start Docker containers
 
    docker compose up -d
+### 3. Airflow UI Access
+Open the browser and go to http://localhost:8080 or you can click on 8080:8080 on Docker Desktop inside your container
+
+Login details
+- Username : admin
+- Password : admin
+## How this all works
+The Airflow DAG performs:
+1. **Extract** : Which fetches data from the COVID-19 API and stores it as a CSV file
+2. **Transform** : Filters columns, handles missing values accordingly, calculates fatality rate
+3. **Load** : Insters the cleaned data into the PostgresSQL database
+DAG also has a @daily schedule which can be triggered manually and run daily.
