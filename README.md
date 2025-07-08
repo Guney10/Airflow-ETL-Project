@@ -23,6 +23,7 @@ It gets real-time COVID-19 data from a public API, transforms it, and loads it i
 **COVID 19 API -> Airflow DAG (Extract, Transform and Load) -> PostgreSQL Database**
 ## How to Setup
 1. Firstly, clone the repository
+
    git clone https://github.com/Guney10/Airflow-ETL-Project.git
 
    cd Airflow-ETL-Project
