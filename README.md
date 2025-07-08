@@ -45,11 +45,11 @@ The Airflow DAG performs:
 DAG also has a @daily schedule which can be triggered manually and run daily.
 
 ## Outputs
-covid_data.csv - The raw data which is extracted
+**covid_data.csv** - The raw data which is extracted
 
-covid_data_transformed.csv - Cleaned and transformed data
+**covid_data_transformed.csv** - Cleaned and transformed data
 
-PostgresSQL table - covid_stats
+**PostgresSQL table** - covid_stats
 
 The sample data can be queried using SQL inside the PostgresSQL container
 
