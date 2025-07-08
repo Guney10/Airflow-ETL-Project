@@ -43,3 +43,21 @@ The Airflow DAG performs:
 2. **Transform** : Filters columns, handles missing values accordingly, calculates fatality rate
 3. **Load** : Insters the cleaned data into the PostgresSQL database
 DAG also has a @daily schedule which can be triggered manually and run daily.
+
+## Outputs
+covid_data.csv - The raw data which is extracted
+covid_data_transformed.csv - Cleaned and transformed data
+PostgresSQL table - covid_stats
+The sample data can be queried using SQL inside the PostgresSQL container
+
+## SQL Queries
+This is all inside the container so once you run this in the terminal:
+
+**docker compose exec postgres psql -U airflow -d airflow**
+
+Then you can run example queries such as :
+
+**SELECT country, cases FROM covid_stats ORDER BY cases DESC LIMIT 5** - This will list the top 5 countries by cases 
+
+**SELECT AVG(fatality_rate) FROM covid_stats** - Calculates the average fatality rate
+
