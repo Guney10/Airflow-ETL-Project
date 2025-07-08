@@ -78,3 +78,11 @@ Project tasks were tracked using Trello.
 - Writing README and documentation
 
 - Recording a demo
+## Contribution
+If you would like to contribute to this repo:
+
+- Fork the repository
+- Create a new branch by using this code (git checkout -b example/your-example)
+- Commit any changes by (git commit -m "Example")
+- Push branch (git push origin branch)
+- Then open a Pull Request
