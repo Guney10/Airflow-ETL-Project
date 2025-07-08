@@ -64,3 +64,17 @@ Then you can run example queries such as :
 
 **SELECT AVG(fatality_rate) FROM covid_stats** - Calculates the average fatality rate
 
+## Project Management
+Project tasks were tracked using Trello.
+
+**Tasks include:**
+
+- Setting up Docker + Airflow
+
+- Creating DAG tasks (extract, transform, load)
+
+- Connecting to PostgreSQL
+
+- Writing README and documentation
+
+- Recording a demo
