@@ -36,6 +36,7 @@ This project demonstrates an automated ETL (Extract, Transform, Load) pipeline u
    cd Airflow-ETL-Project
 
    uv venv
+   
    uv pip install -r requirements.txt
 
    venv\Scripts\activate (Windows)
