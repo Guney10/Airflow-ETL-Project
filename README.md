@@ -42,8 +42,8 @@ This project demonstrates an automated ETL (Extract, Transform, Load) pipeline u
 Open the browser and go to http://localhost:8080 or you can click on 8080:8080 on Docker Desktop inside your container
 
 Login details
-- Username : admin
-- Password : admin
+- Username : airflow
+- Password : airflow
 ## How this all works
 The Airflow DAG performs:
 1. **Extract** : Which fetches data from the COVID-19 API and stores it as a CSV file
