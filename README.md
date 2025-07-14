@@ -39,6 +39,7 @@ This project demonstrates an automated ETL (Extract, Transform, Load) pipeline u
    uv pip install -r requirements.txt
 
    venv\Scripts\activate (Windows)
+   
    source venv/bin/activate (MacOS/Linux)
    
 ### 2. Start Docker containers
