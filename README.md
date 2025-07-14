@@ -4,13 +4,13 @@ An ETL pipeline built with Apache Airflow, Docker and PostgreSQL to automate COV
 ## Overview
 This project demonstrates an automated ETL (Extract, Transform, Load) pipeline using Apache Airflow running inside Docker containers. The pipeline:
 
-Extracts live COVID-19 data from a public API.
+- Extracts live COVID-19 data from a public API.
 
-Transforms the data (cleans, selects relevant columns, computes fatality rate).
+- Transforms the data (cleans, selects relevant columns, computes fatality rate).
 
-Loads it into a PostgreSQL database.
+- Loads it into a PostgreSQL database.
 
-Uses Airflow's DAG to orchestrate and schedule tasks.
+- Uses Airflow's DAG to orchestrate and schedule tasks.
 
 ## Tech Tools
 - Workflow Orchestration: Apache Airflow
