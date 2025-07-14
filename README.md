@@ -29,7 +29,7 @@ This project demonstrates an automated ETL (Extract, Transform, Load) pipeline u
 <img width="1426" height="650" alt="image" src="https://github.com/user-attachments/assets/903f03b6-e9ff-45c6-a339-7fa4906b7f16" />
 
 ## How to Setup
-### 1. Firstly, clone the repository and create and sync the virtual environment and activation
+### 1. Firstly, clone the repository and create and sync the virtual environment
 
    git clone https://github.com/Guney10/Airflow-ETL-Project.git
 
@@ -38,15 +38,16 @@ This project demonstrates an automated ETL (Extract, Transform, Load) pipeline u
    uv venv
    
    uv pip install -r requirements.txt
-
+## 2. Activation
+   
    venv\Scripts\activate (Windows)
    
    source venv/bin/activate (MacOS/Linux)
    
-### 2. Start Docker containers
+### 3. Start Docker containers
 
    docker compose up -d
-### 3. Airflow UI Access
+### 4. Airflow UI Access
 Open the browser and go to http://localhost:8080 or you can click on 8080:8080 on Docker Desktop inside your container
 
 Login details
