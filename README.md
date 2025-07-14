@@ -26,8 +26,8 @@ This project demonstrates an automated ETL (Extract, Transform, Load) pipeline u
 - Version Control: Git & GitHub
 
 ## Pipeline Architecture
+<img width="1426" height="650" alt="image" src="https://github.com/user-attachments/assets/903f03b6-e9ff-45c6-a339-7fa4906b7f16" />
 
-**COVID 19 API -> Airflow DAG (Extract, Transform and Load) -> PostgreSQL Database**
 ## How to Setup
 ### 1. Firstly, clone the repository
 
