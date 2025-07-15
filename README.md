@@ -2,8 +2,15 @@
 An ETL pipeline built with Apache Airflow, Docker and PostgreSQL to automate COVID-19 data ingestion, transformation, and loading into a database.
 
 ## Overview
-This project demonstrates an automated ETL pipeline using Apache Airflow.
-It gets real-time COVID-19 data from a public API, transforms it, and loads it into a PostgreSQL database running in a Docker container.
+This project demonstrates an automated ETL (Extract, Transform, Load) pipeline using Apache Airflow running inside Docker containers. The pipeline:
+
+- Extracts live COVID-19 data from a public API.
+
+- Transforms the data (cleans, selects relevant columns, computes fatality rate).
+
+- Loads it into a PostgreSQL database.
+
+- Uses Airflow's DAG to orchestrate and schedule tasks.
 
 ## Tech Tools
 - Workflow Orchestration: Apache Airflow
@@ -19,24 +26,37 @@ It gets real-time COVID-19 data from a public API, transforms it, and loads it i
 - Version Control: Git & GitHub
 
 ## Pipeline Architecture
+<img width="1426" height="650" alt="image" src="https://github.com/user-attachments/assets/903f03b6-e9ff-45c6-a339-7fa4906b7f16" />
 
-**COVID 19 API -> Airflow DAG (Extract, Transform and Load) -> PostgreSQL Database**
 ## How to Setup
-### 1. Firstly, clone the repository
+### 1. Firstly, clone the repository and create and sync the virtual environment
 
    git clone https://github.com/Guney10/Airflow-ETL-Project.git
 
    cd Airflow-ETL-Project
 
-### 2. Start Docker containers
+   uv venv
+   
+   uv pip install -r requirements.txt
+## 2. Activation
+   
+   venv\Scripts\activate (Windows)
+   
+   source venv/bin/activate (MacOS/Linux)
+   
+### 3. Start Docker containers
 
    docker compose up -d
-### 3. Airflow UI Access
+### 4. Airflow UI Access
 Open the browser and go to http://localhost:8080 or you can click on 8080:8080 on Docker Desktop inside your container
 
 Login details
-- Username : admin
-- Password : admin
+- Username : airflow
+- Password : airflow
+## To stop the containers:
+docker compose down
+
+This will stop all containers and clean up the resources. 
 ## How this all works
 The Airflow DAG performs:
 1. **Extract** : Which fetches data from the COVID-19 API and stores it as a CSV file
