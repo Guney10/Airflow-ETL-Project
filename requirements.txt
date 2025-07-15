@@ -1,0 +1,5 @@
+apache-airflow - Core orchestration tool for the ETL pipeline
+pandas - For data manipulation, cleaning, transformation
+requests - If you're pulling data from a REST API
+sqlalchemy - ORM layer to interface with SQL databases (e.g., PostgreSQL, MySQL)
+psycopg2-binary - PostgreSQL database adapter
