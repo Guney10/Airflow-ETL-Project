@@ -7,10 +7,10 @@ import psycopg2
 # Grab the API 
 def extract_covid_data():
     url = "https://disease.sh/v3/covid-19/countries"
-    response = requests.get(url)
+    response = requests.get(url) #Send a GET request to the API and store response
     data = response.json()
-    df = pd.DataFrame(data)
-    df.to_csv("/opt/airflow/dags/output/covid_data.csv", index=False)
+    df = pd.DataFrame(data) # convert JSON into pandas DataFrame
+    df.to_csv("/opt/airflow/dags/output/covid_data.csv", index=False) #Save as CSV file in the specified output directory
 
 def transform_data():
     df = pd.read_csv('/opt/airflow/dags/output/covid_data.csv')
@@ -41,17 +41,17 @@ def transform_data():
         axis=1
     )
 
-    df.to_csv('/opt/airflow/dags/output/covid_data_transformed.csv', index=False)
+    df.to_csv('/opt/airflow/dags/output/covid_data_transformed.csv', index=False) #DataFrame to a CSV file in the DAGs output directory
     print("The transformation is complete.")    
 
 def load_data():
-    df = pd.read_csv('/opt/airflow/dags/output/covid_data_transformed.csv')
+    df = pd.read_csv('/opt/airflow/dags/output/covid_data_transformed.csv') #Read the transformed CSV file into a DataFrame
 
     conn = psycopg2.connect(
-        host="postgres",
-        database="airflow",
-        user="airflow",
-        password="airflow"
+        host="postgres", # This matches the service name in docker-compose
+        database="airflow", # Database name
+        user="airflow", # Database user
+        password="airflow" # Database password
     )
     cur = conn.cursor()
 
@@ -74,38 +74,38 @@ def load_data():
             row['population'],
             row['fatality_rate']
         ))
-
+    # Finalise the database transaction and clean up connections
     conn.commit()
     cur.close()
     conn.close()
-    print("Data loaded into postgres.")
+    print("Data loaded into postgres.") # confirmation message for logs
 
 default_args = {
-    'owner': 'airflow',
-    'retries': 1,
-    'retry_delay': timedelta(minutes=1),
+    'owner': 'airflow', # Owner name for UI reference
+    'retries': 1, # number of retries on failure
+    'retry_delay': timedelta(minutes=1), #wait time between tries
 }
 
 with DAG(
-    dag_id='covid_api_etl',
+    dag_id='covid_api_etl', # Unique ID for the DAG
     default_args=default_args,
     description='ETL DAG for COVID-19 data using Airflow',
-    schedule_interval='@daily',
-    start_date=datetime(2024, 1, 1),
+    schedule_interval='@daily',  # DAG runs once daily
+    start_date=datetime(2025, 1, 1), # Start scheduling from this date
     catchup=False,
 ) as dag:
-
+    # Task to extract COVID-19 data from public API
     extract_task = PythonOperator(
         task_id='extract_covid_data',
         python_callable=extract_covid_data
-    )
+    ) # Task to clean and transform the extracted data
     transform_task = PythonOperator(
         task_id='transform_data',
         python_callable=transform_data
-    )
+    ) # Task to load the transformed data into PostgreSQL database
     load_task = PythonOperator(
         task_id='load_data',
         python_callable=load_data
     )
-
-    extract_task >> transform_task >> load_task
+    # Define the order of task execution (ETL sequence)
+    extract_task >> transform_task >> load_task #extract runs first, then transform, then load
